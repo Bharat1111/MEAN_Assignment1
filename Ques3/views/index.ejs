@@ -11,8 +11,13 @@
       <!-- Looping through data -->
       <% posts.forEach((post)=> { %>
       <li>
-        <h2><%= post.title %></h2>
-        <p><%= post.body %></p>
+        <h2><%= post.post %></h2>
+        <p><%= post.description %></p>
+        <% if(post.comments.length) { %>
+        <h4>Comments -</h4>
+        <% post.comments.forEach((comment) => { %>
+        <p><%= comment %></p>
+        <% })} %>
       </li>
       <hr />
       <% }) %>

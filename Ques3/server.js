@@ -10,11 +10,18 @@ app.set("view engine", "ejs");
 
 // Demo posts
 const posts = [
-  { title: "Title 1", body: "Body 1" },
-  { title: "Title 2", body: "Body 2" },
-  { title: "Title 3", body: "Body 3" },
-  { title: "Title 4", body: "Body 4" },
+  { post: "Post 1", description: "lorem", comments: ["Nice", "good"] },
+  { post: "Post 2", description: "lorem ipsum", comments: [] },
+  {
+    post: "Post 3",
+    description: "some description",
+    comments: ["comment 1", "comment 2", "comment 3"],
+  },
 ];
+posts.forEach((post) => {
+  if (post.comments.length)
+    post.comments.forEach((comment) => console.log(comment));
+});
 
 app.get("/", (req, res) => {
   // Calling the render method on the response object
