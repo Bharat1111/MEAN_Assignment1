@@ -1,6 +1,8 @@
 // Initialzing modules
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
+const { post } = require("./models/Posts");
 
 // Setting PORT
 const PORT = 3000;
@@ -9,22 +11,32 @@ const PORT = 3000;
 app.set("view engine", "ejs");
 
 // Demo posts
-const posts = [
-  { post: "Post 1", description: "lorem", comments: ["Nice", "good"] },
-  { post: "Post 2", description: "lorem ipsum", comments: [] },
-  {
-    post: "Post 3",
-    description: "some description",
-    comments: ["comment 1", "comment 2", "comment 3"],
-  },
-];
-posts.forEach((post) => {
-  if (post.comments.length)
-    post.comments.forEach((comment) => console.log(comment));
-});
+// const posts = [
+//   { post: "Post 1", description: "lorem", comments: ["Nice", "good"] },
+//   { post: "Post 2", description: "lorem ipsum", comments: [] },
+//   {
+//     post: "Post 3",
+//     description: "some description",
+//     comments: ["comment 1", "comment 2", "comment 3"],
+//   },
+// ];
+// posts.forEach((post) => {
+//   if (post.comments.length)
+//     post.comments.forEach((comment) => console.log(comment));
+// });
 
-app.get("/", (req, res) => {
+mongoose
+  .connect(
+    "mongodb+srv://user:user@cluster0.ssbx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Db connected"))
+  .catch((err) => console.log(err.message));
+
+app.get("/", async (req, res) => {
   // Calling the render method on the response object
+  const posts = await post.find();
+  // console.log(posts);
   res.render("index", {
     // By default, Express will look inside of a views folder when resolving the template files
     // Sends back the rendered HTML to client
